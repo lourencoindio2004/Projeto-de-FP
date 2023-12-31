@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define MAX_COMPUTADORES 100
 
-// Funcao para mostrar o menu
-void mostrarMenu()
-    {
+    struct Computador {
+        int id;
+        char designacao[50];
+        char nome_colaborador[50];
+        char dataAtribuicao[20];
+        char estado[20];
+        float valor;
+    };
+
+    // Funcao para mostrar o menu
+    void mostrarMenu(int numComputadores) {
         printf("\t\t\tGestao de Computadores Portateis");
-        printf("\n\n\tTotal de Computadores:  \t\tValor dos Computadores(€):  \n\tIntervencoes solicitadas:  \t\tIntervencoes efetuadas: \n");
+        printf("\n\n\tTotal de Computadores: %d\t\tValor dos Computadores(€):  \n\tIntervencoes solicitadas:  \t\tIntervencoes efetuadas: \n", numComputadores);
         printf("\n\t\t1 Novo Computador\n");
         printf("\t\t2 Solicitar intervenção\n");
         printf("\t\t3 Registar intervenção\n");
@@ -16,46 +25,63 @@ void mostrarMenu()
         printf("\t\t\tSelecione a opcao: ");
     }
 
-int main()
-    {
-        int opcao;
+    int main() {
+        struct Computador computadores[MAX_COMPUTADORES];
+        int numComputadores = 0;
+        int opcao = -1;
+
+        mostrarMenu(numComputadores); // Mostra o menu inicial
 
         do {
-            mostrarMenu();
             scanf("%d", &opcao);
 
             switch (opcao) {
                 case 1:
+                    system("cls");
                     printf("Opção 1 selecionada: Novo Computador\n");
-                    // Adicionar o codigo
+
+                    if (numComputadores < MAX_COMPUTADORES)
+                    {
+                        printf("Número de Identificação: ");
+                        scanf("%d", &computadores[numComputadores].id);
+
+                        printf("Designação: ");
+                        scanf("%s", computadores[numComputadores].designacao);
+
+                        printf("Nome do Colaborador: ");
+                        scanf("%s", computadores[numComputadores].nome_colaborador);
+
+                        printf("Data de Atribuição: ");
+                        scanf("%s", computadores[numComputadores].dataAtribuicao);
+
+                        printf("Estado do Computador: ");
+                        scanf("%s", computadores[numComputadores].estado);
+
+                        printf("Valor do Equipamento: ");
+                        scanf("%f", &computadores[numComputadores].valor);
+
+                        numComputadores++;
+
+                        getchar(); // Aguarda a entrada do usuário antes de limpar a tela e voltar ao menu
+
+                        system("cls"); // Limpa o ecra
+                        mostrarMenu(numComputadores);
+                    } else
+                    {
+                        printf("Limite máximo de computadores atingido!\n");
+                    }
                     break;
                 case 2:
-                    printf("Opção 2 selecionada: Solicitar intervenção\n");
 
-                    break;
-                case 3:
-                    printf("Opção 3 selecionada: Registar intervenção\n");
 
-                    break;
-                case 4:
-                    printf("Opção 4 selecionada: Listar\n");
-
-                    break;
-                case 5:
-                    printf("Opção 5 selecionada: Informacoes\n");
-
-                    break;
-                case 6:
-                    printf("Opção 6 selecionada: Gravar\n");
-
-                    break;
                 case 0:
                     printf("A sair do Programa!\n");
                     break;
+
                 default:
                     printf("Opcao inválida\n");
             }
-        } while (opcao != 0);
+    } while (opcao != 0);
 
-        return 0;
-    }
+    return 0;
+}
