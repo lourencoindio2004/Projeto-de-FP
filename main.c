@@ -1,147 +1,165 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_COMPUTADORES 100
-#define MAX_INTERVENCOES 15
+#define MAX_COMPUTADORES 100 // Definir o número máximo de computadores
+#define MAX_INTERVENCOES 100
 
-    struct Intervencao {
-        int codigo;
-        char data_registro[20];
-        char descricao_problema[100];
-    };
-    struct Computador {
-        int id;
-        char designacao[50];
-        char nome_colaborador[50];
-        char dataAtribuicao[20];
-        char estado[20];
-        char data_registro[20];
-        char descricao_problema[100];
-        float valor;
-        int intervencoes_solicitadas;
-        struct Intervencao *intervencoes;
+typedef struct {
+    int id;
+    char designacao[50];
+    char colaborador[50];
+    char dataAtribuicao[20];
+    char estado[20];
+    float valor;
+} Computador;
+Computador computadores[MAX_COMPUTADORES]; // Array para armazenar os computadores
+int numComputadores = 0; // Número atual de computadores registados
 
-    };
+void registarNovoComputador() {
+    if (numComputadores < MAX_COMPUTADORES) {
+        printf("Introduza o numero de identificação: ");
+        scanf("%d", &computadores[numComputadores].id);
+        printf("Introduza a designacao: ");
+        scanf(" %[^\n]s", computadores[numComputadores].designacao);
+        printf("Introduza o nome do colaborador: ");
+        scanf(" %[^\n]s", computadores[numComputadores].colaborador);
+        printf("Introduza a data de atribuicao (dd/mm/aaaa): ");
+        scanf(" %[^\n]s", computadores[numComputadores].dataAtribuicao);
+        printf("Introduza o estado do computador: ");
+        scanf(" %[^\n]s", computadores[numComputadores].estado);
+        printf("Introduza o valor do equipamento: ");
+        scanf("%f", &computadores[numComputadores].valor);
 
-    // Funcao para mostrar o menu
-    void mostrarMenu(int numComputadores) {
-        printf("\t\t\tGestao de Computadores Portateis");
-        printf("\n\n\tTotal de Computadores: %d\t\tValor dos Computadores(€):  \n\tIntervencoes solicitadas:  \t\tIntervencoes efetuadas: \n", numComputadores);
-        printf("\n\t\t1 Novo Computador\n");
-        printf("\t\t2 Solicitar intervencao\n");
-        printf("\t\t3 Registar intervencao\n");
-        printf("\t\t4 Listar\n");
-        printf("\t\t5 Informacoes\n");
-        printf("\t\t6 Gravar\n");
-        printf("\t\t0 Sair\n");
-        printf("\t\t\tSelecione a opcao: ");
+        numComputadores++; // Incrementar o número de computadores registados
+        printf("Computador registado com sucesso!\n");
+    } else {
+        printf("Limite máximo de computadores atingido.\n");
+    }
+}
+
+
+typedef struct {
+    int codigoIntervencao;
+    int numIdentificacaoComputador;
+    char dataRegisto[20];
+    char descricaoProblema[100];
+} SolicitacaoIntervencao;
+
+SolicitacaoIntervencao intervencoes[MAX_INTERVENCOES]; // Array para armazenar solicitações de intervenções
+int numIntervencoes = 0;
+
+typedef struct {
+    int codigoIntervencao;
+    int numIdentificacaoComputador;
+    char dataRegisto[20];
+    char descricaoProblema[100];
+    char dataIntervencao[20];
+    char descricaoIntervencao[100];
+    float custoIntervencao;
+    int intervencaoEfetuada; // Flag para identificar se a intervenção foi efetuada
+} EfetuarIntervencao;
+
+EfetuarIntervencao efetuarIntervencoes[MAX_INTERVENCOES]; // Correção no nome da variável
+int numEfetuarIntervencoes = 0;
+
+
+
+
+
+
+void solicitarIntervencao() {
+    if (numIntervencoes < MAX_INTERVENCOES) {
+        printf("Introduza o código da intervenção: ");
+        scanf("%d", &intervencoes[numIntervencoes].codigoIntervencao);
+        printf("Introduza o número de identificação do computador: ");
+        scanf("%d", &intervencoes[numIntervencoes].numIdentificacaoComputador);
+        printf("Introduza a data do registo da solicitação (dd/mm/aaaa): ");
+        scanf(" %[^\n]s", intervencoes[numIntervencoes].dataRegisto);
+        printf("Introduza uma breve descrição do problema: ");
+        scanf(" %[^\n]s", intervencoes[numIntervencoes].descricaoProblema);
+
+        numIntervencoes++; // Incrementar o número de intervenções registadas
+        printf("Intervenção registada com sucesso!\n");
+    } else {
+        printf("Limite máximo de intervenções atingido.\n");
+    }
+}
+
+void efetuarIntervencao() {
+    int codigo;
+
+    printf("Introduza o código da intervenção a ser efetuada: ");
+    scanf("%d", &codigo);
+
+    int encontrado = 0;
+    for (int i = 0; i < numIntervencoes; ++i) {
+        if (intervencoes[i].codigoIntervencao == codigo) {
+            printf("Introduza a data da intervenção (dd/mm/aaaa): ");
+            scanf(" %19[^\n]%*c", efetuarIntervencoes[numEfetuarIntervencoes].dataIntervencao);
+
+            printf("Introduza a descrição da intervenção: ");
+            scanf(" %99[^\n]%*c", efetuarIntervencoes[numEfetuarIntervencoes].descricaoIntervencao);
+
+            printf("Introduza o custo da intervenção: ");
+            scanf("%f", &efetuarIntervencoes[numEfetuarIntervencoes].custoIntervencao);
+
+            efetuarIntervencoes[numEfetuarIntervencoes].intervencaoEfetuada = 1;
+            printf("Intervenção efetuada registada com sucesso!\n");
+
+            encontrado = 1;
+            numEfetuarIntervencoes++; // Incrementa o contador
+            break;
+        }
     }
 
-    int main() {
-        struct Computador computadores[MAX_COMPUTADORES];
-        int numComputadores = 0;
-        int opcao = -1;
-        int indiceComputador = -1, idComputador;
+    if (!encontrado) {
+        printf("Intervenção não encontrada.\n");
+    }
+}
 
+void mostrarMenu() {
+    printf("\t\t\tGestao de Computadores Portateis");
+    printf("\n\n\tTotal de Computadores: %d\t\tValor dos Computadores(€):  ",numComputadores);
+    printf("\n\tIntervencoes solicitadas:%d  \t\tIntervencoes efetuadas: %d\n",numIntervencoes, numEfetuarIntervencoes);
+    printf("\n\t\t1 Novo Computador\n");
+    printf("\t\t2 Solicitar intervencao\n");
+    printf("\t\t3 Registar intervencao\n");
+    printf("\t\t4 Listar\n");
+    printf("\t\t5 Informacoes\n");
+    printf("\t\t6 Gravar\n");
+    printf("\t\t0 Sair\n");
+    printf("\t\t\tSelecione a opcao: ");
+}
 
-        mostrarMenu(numComputadores); // Mostra o menu inicial
+int main() {
+    int opcao;
 
-        do {
-            scanf("%d", &opcao);
+    do {
+        mostrarMenu(); // Mostra o menu
+        scanf("%d", &opcao); // Lê a opção do utilizador
 
-            switch (opcao) {
-                case 1:
-                    system("cls");
-                    printf("Opção 1 selecionada: Novo Computador\n");
-
-                    if (numComputadores < MAX_COMPUTADORES)
-                    {
-                        printf("Número de Identificacao: ");
-                        scanf("%d", &computadores[numComputadores].id);
-
-                        printf("Designacao: ");
-                        scanf("%s", computadores[numComputadores].designacao);
-
-                        printf("Nome do Colaborador: ");
-                        scanf("%s", computadores[numComputadores].nome_colaborador);
-
-                        printf("Data de Atribuicao: ");
-                        scanf("%s", computadores[numComputadores].dataAtribuicao);
-
-                        printf("Estado do Computador: ");
-                        scanf("%s", computadores[numComputadores].estado);
-
-                        printf("Valor do Equipamento: ");
-                        scanf("%f", &computadores[numComputadores].valor);
-
-                        numComputadores++;
-
-                        getchar(); // Aguarda a entrada do usuário antes de limpar a tela e voltar ao menu
-
-                        system("cls"); // Limpa o ecrã
-                        mostrarMenu(numComputadores);
-                    } else
-                    {
-                        printf("Limite maximo de computadores atingido!\n");
-                    }
-                    break;
-                case 2:
-                    system("cls");
-                    printf("Opção 2 selecionada: Solicitar intervencao\n");
-
-                    if (numComputadores > 0)
-                    {
-                        printf("Número de Identificaçao do Computador: ");
-                        scanf("%d", &idComputador);
-
-                        // Verifica se o ID do computador existe
-                        for (int i = 0; i < numComputadores; i++)
-                        {
-                    if (computadores[i].id == idComputador)
-                    {
-                        indiceComputador = i;
-                        break;
-                        }
-                        }
-
-                    if (indiceComputador != -1)
-                    {
-                    if (computadores[indiceComputador].intervencoes_solicitadas < MAX_INTERVENCOES)
-                    {
-                        printf("Codigo da Intervencao: ");
-                        scanf("%d", &computadores[indiceComputador].intervencoes[computadores[indiceComputador].intervencoes_solicitadas].codigo);
-
-                        printf("Data do Registro da Solicitacao: ");
-                        scanf("%s", computadores[indiceComputador].intervencoes[computadores[indiceComputador].intervencoes_solicitadas].data_registro);
-
-                        printf("Breve Descrição do Problema: ");
-                        scanf("%s", computadores[indiceComputador].intervencoes[computadores[indiceComputador].intervencoes_solicitadas].descricao_problema);
-
-                        // Incrementa o número de intervencoes solicitadas
-                        computadores[indiceComputador].intervencoes_solicitadas++;
-
-                        getchar(); // Aguarda a entrada do usuário antes de limpar a tela e voltar ao menu
-
-                        system("cls"); // Limpa o ecra
-                        mostrarMenu(numComputadores);
-                    }else{
-                        printf("Limite maximo de intervencoes solicitadas atingido para este computador!\n");
-                        }
-                    }else{
-                        printf("Computador nao encontrado!\n");
-                        }
-                    }else{
-                        printf("Nao existem computadores registrados para solicitar intervencao!\n");
-                    }
-                    break;
-
-
-                case 0:
-                    printf("A sair do Programa!\n");
-                    break;
-
-                default:
-                    printf("Opcao invalida\n");
-            }
+        switch (opcao) {
+            case 1:
+                system("cls");
+                registarNovoComputador();
+                system("cls");
+                break;
+            // Adiciona casos para outras opções do menu, se necessário
+            case 2:
+                system("cls");
+                solicitarIntervencao();
+                system("cls");
+                break;
+            case 3:
+                system("cls");
+                efetuarIntervencao();
+                system("cls");
+                break;
+            case 0:
+                printf("A sair do programa. Adeus!\n");
+                break;
+            default:
+                printf("Opcao invalida. Tente novamente.\n");
+        }
     } while (opcao != 0);
 
     return 0;
