@@ -175,7 +175,6 @@
     }
 
 
-
     //-----------------------------------------------------------------------------------------------------------------------------------//
 
 
@@ -274,7 +273,7 @@
 
     void mostrarMenu() {
         printf("\t\t\tGestao de Computadores Portateis");
-        printf("\n\n\tTotal de Computadores: %d\t\tValor dos Computadores(€):  ",numComputadores);
+        printf("\n\n\tTotal de Computadores: %d\t\tValor dos Computadores(€): ",numComputadores);
         printf("\n\tIntervencoes solicitadas:%d  \t\tIntervencoes efetuadas: %d\n",numIntervencoes, numEfetuarIntervencoes);
         printf("\n\t\t1 Novo Computador\n");
         printf("\t\t2 Solicitar intervencao\n");
