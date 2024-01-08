@@ -178,8 +178,10 @@
 
     //-----------------------------------------------------------------------------------------------------------------------------------//
 
-    void lista() {
-    printf("\nListagem de Computadores:\n");
+
+    void lista()
+    {
+        printf("\nListagem de Computadores:\n");
         if (numComputadores > 0) {
         printf("\nListagem de Computadores:\n");
             for (int i = 0; i < numComputadores; i++) {
@@ -193,40 +195,41 @@
                 printf("-------------------------------\n");
                 }
         }else{ printf("Nenhum computador registrado.\n");
-    }
+     }
 
     printf("\nListagem de Intervencoes Solicitadas:\n");
-    if (numIntervencoes > 0) {
-        for (int i = 0; i < numIntervencoes; i++) {
-            printf("\nIntervencao %d:\n", i + 1);
-            printf("Codigo: %d\n", intervencoes[i].codigoIntervencao);
-            printf("Num. Identificacao Computador: %d\n", intervencoes[i].numIdentificacaoComputador);
-            printf("Data de Registo: %s\n", intervencoes[i].dataRegisto);
-            printf("Descricao do Problema: %s\n", intervencoes[i].descricaoProblema);
-            printf("-------------------------------\n");
+        if (numIntervencoes > 0) {
+            for (int i = 0; i < numIntervencoes; i++) {
+                printf("\nIntervencao %d:\n", i + 1);
+                printf("Codigo: %d\n", intervencoes[i].codigoIntervencao);
+                printf("Num. Identificacao Computador: %d\n", intervencoes[i].numIdentificacaoComputador);
+                printf("Data de Registo: %s\n", intervencoes[i].dataRegisto);
+                printf("Descricao do Problema: %s\n", intervencoes[i].descricaoProblema);
+                printf("-------------------------------\n");
+        }
+        }else{
+            printf("Nenhuma intervencao solicitada.\n");
+        }
+
+        printf("\nListagem de Intervencoes Efetuadas:\n");
+        if (numEfetuarIntervencoes > 0) {
+            for (int i = 0; i < numEfetuarIntervencoes; i++) {
+                printf("\nIntervencao Efetuada %d:\n", i + 1);
+                printf("Codigo: %d\n", efetuarIntervencoes[i].codigoIntervencao);
+                printf("Num. Identificacao Computador: %d\n", efetuarIntervencoes[i].numIdentificacaoComputador);
+                printf("Data de Registo: %s\n", efetuarIntervencoes[i].dataRegisto);
+                printf("Descricao do Problema: %s\n", efetuarIntervencoes[i].descricaoProblema);
+                printf("Data de Intervencao: %s\n", efetuarIntervencoes[i].dataIntervencao);
+                printf("Descricao da Intervencao: %s\n", efetuarIntervencoes[i].descricaoIntervencao);
+                printf("Custo da Intervencao: %.2f\n", efetuarIntervencoes[i].custoIntervencao);
+                printf("Intervencao Efetuada: %s\n", efetuarIntervencoes[i].intervencaoEfetuada ? "Sim" : "Nao");
+                printf("-------------------------------\n");
+        }
+       }else{
+     printf("Nenhuma intervencao efetuada.\n");
     }
-    }else{
-        printf("Nenhuma intervencao solicitada.\n");
     }
 
-    printf("\nListagem de Intervencoes Efetuadas:\n");
-    if (numEfetuarIntervencoes > 0) {
-        for (int i = 0; i < numEfetuarIntervencoes; i++) {
-            printf("\nIntervencao Efetuada %d:\n", i + 1);
-            printf("Codigo: %d\n", efetuarIntervencoes[i].codigoIntervencao);
-            printf("Num. Identificacao Computador: %d\n", efetuarIntervencoes[i].numIdentificacaoComputador);
-            printf("Data de Registo: %s\n", efetuarIntervencoes[i].dataRegisto);
-            printf("Descricao do Problema: %s\n", efetuarIntervencoes[i].descricaoProblema);
-            printf("Data de Intervencao: %s\n", efetuarIntervencoes[i].dataIntervencao);
-            printf("Descricao da Intervencao: %s\n", efetuarIntervencoes[i].descricaoIntervencao);
-            printf("Custo da Intervencao: %.2f\n", efetuarIntervencoes[i].custoIntervencao);
-            printf("Intervencao Efetuada: %s\n", efetuarIntervencoes[i].intervencaoEfetuada ? "Sim" : "Nao");
-            printf("-------------------------------\n");
-    }
-    }else{
-        printf("Nenhuma intervencao efetuada.\n");
-    }
-}
 
     //-----------------------------------------------------------------------------------------------------------------------------------//
 
@@ -319,8 +322,11 @@
                         break;
                 case 4:
                         system("cls");
-                        lista(); // funcao e chamada para o menu
-                        system("cls");
+                        lista();
+                        printf("\nPressione Enter para continuar...");
+                        getchar();
+                        getchar();
+                        system("cls"); // funcao e chamada para o menu
                         break;
                 case 5:
                         system("cls");
